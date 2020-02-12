@@ -1,5 +1,5 @@
 # LiFrameDemo
-基于cocoscreator2.2.2引擎的小demo，用于演示LiFrame的使用，LiFrame项目地址:https://github.com/llr104/LiFrame
+基于cocoscreator2.2.2引擎的小demo，用于演示LiFrame的使用，LiFrame项目地址:https://github.com/llr104/LiFrame (LiFrame服务器架构 --武汉疫情期间宅在家中无所事事的成果)
 
 # 用cocoscreator2.x打开项目，直接运行
 
