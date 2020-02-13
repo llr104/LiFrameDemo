@@ -7,3 +7,7 @@
   
   demo目前比较简陋，只做了同步玩家移动、攻击、怪物出现功能
 # 图片素材来源于网络，仅供学习使用，请不要用于商用
+
+![登录界面](https://github.com/llr104/LiFrameDemo/1.png)
+![选择服务器界面](https://github.com/llr104/LiFrameDemo/2.png)
+![游戏场景界面](https://github.com/llr104/LiFrameDemo/3.png)
