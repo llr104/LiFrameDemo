@@ -6,7 +6,9 @@ var CryptoJS = require("crypto")
 
 let innet = {
     wssocket:null,
-    url:""
+    url:"",
+    handshake:false,
+    uuid:""
 }
 
 
@@ -45,7 +47,7 @@ function Encrypt(word) {
 let network = function(){
     
     this.connect = function(url){
-        console.log("connect 111111")
+        //console.log("connect 111111")
         if (this.innet.wssocket && this.innet.wssocket.readyState <= 1) {
             this.innet.wssocket.close()
         }
@@ -59,6 +61,7 @@ let network = function(){
     
         this.innet.url = url
         this.innet.wssocket = ws
+        this.handshake = false
 
         if (this.interval){
             clearInterval(this.interval)
@@ -74,7 +77,7 @@ let network = function(){
             return
         }
 
-        if (this.innet.wssocket.readyState == 1){
+        if (this.innet.wssocket.readyState == 1 && this.innet.handshake){
             if (this.msgArr.length>0){
                 var msg = this.msgArr.pop()
                 //console.log("send length:", msg.length)
@@ -90,14 +93,17 @@ let network = function(){
         }
     }
 
-    this.send = function(msgName, proxyName, msgObj){
+    this.pack = function(msgName, proxyName, msgObj){
 
-        var str = JSON.stringify(msgObj);
+        var str = ""
+        if (typeof msgObj == "object"){
+            str = JSON.stringify(msgObj);
+        }else{
+            str = msgObj
+        }
+       
         var msg = msgName + "|" + proxyName + "|" + str
-        //console.log("ready send:", msg)
-        //console.log("before Encrypt msg:", msg, msg.length)
         msg = Encrypt(msg)
-        //console.log("Encrypt msg:", msg, msg.length)
         var options = {
             level: 9,
             timestamp: parseInt(Date.now() / 1000, 10)
@@ -110,21 +116,36 @@ let network = function(){
 		for(var i = 0; i < intView.length; i++){
 			intView[i]= data[i];
         }
-        
+
+        return intView
+    }
+
+    this.send = function(msgName, proxyName, msgObj){
+
+        var p = this.pack(msgName, proxyName, msgObj)
         if (this.innet.wssocket){
-            this.msgArr.push(intView)
+            this.msgArr.push(p)
         }
 
         this.check()
     }
     
     this.onopen = function(target){
-        console.log("onopen:", target)
+        //console.log("onopen:", target)
+        var uuid = this.innet.uuid
+        if(uuid){
+            var p = this.pack("handshake", "", uuid)
+            console.log("有uuid握手")
+            this.innet.wssocket.send(p)
+        }else{
+            var p = this.pack("handshake", "", "")
+            console.log("没有uuid握手")
+            this.innet.wssocket.send(p)
+        }
     }
     
     this.onmessage = function(msgevent){
 
-        //console.log("msgevent:", msgevent)
         var r = msgevent.data instanceof ArrayBuffer
         var msg = null
         var zipLen = 0
@@ -133,7 +154,6 @@ let network = function(){
         if (r) {
             var ab = msgevent.data
             zipLen = ab.byteLength
-           // console.log("onmessage bytes len:", ab.byteLength)
             var buf = [];
             var view = new Uint8Array(ab);
             
@@ -147,37 +167,39 @@ let network = function(){
         }else{
             msg = msgevent.data
             zipLen = msg.length
-            //console.log("onmessage text len:", msg.length)
+          
         }
         originLen = msg.length
-        //console.log("zip len:%d, origin Len:%d, %f", zipLen, originLen, zipLen/originLen)
-
         msg = Decrypt(msg)
-        //console.log("message Decrypt msg:", msg)
-
+        
         //解析协议
         var arr = msg.split("|")
         if(arr.length == 3){
             var msgName = arr[0]
             var proxy = arr[1]
             var msgdata = arr[2]
-            var proxyArr = proxyMgr.getProxy(proxy)
-            if (proxyArr.length == 0){
-                console.log("not proxy:",proxy, msg)
+            
+            if (msgName == "handshake"){
+                this.innet.handshake = true
+                this.innet.uuid = msgdata
+                console.log("handshake 成功")
             }else{
-                //console.log("proxyArr:",proxyArr, msgName, proxy)
-            }
-            var isFound = false
-            for (let index = 0; index < proxyArr.length; index++) {
-                const proxyObj = proxyArr[index];
-                var c = proxyObj.findCallBack(msgName)
-                if (c != null){
-                    c(msgdata)
-                    isFound = true
+                var proxyArr = proxyMgr.getProxy(proxy)
+                if (proxyArr.length == 0){
+                    console.log("not proxy:",proxy, msg)
                 }
-            }
-            if (isFound == false){
-                console.log("proxyArr %s，not found:", proxyArr, msgName)
+                var isFound = false
+                for (let index = 0; index < proxyArr.length; index++) {
+                    const proxyObj = proxyArr[index];
+                    var c = proxyObj.findCallBack(msgName)
+                    if (c != null){
+                        c(msgdata)
+                        isFound = true
+                    }
+                }
+                if (isFound == false){
+                    console.log("proxyArr %s，not found:", proxyArr, msgName)
+                }
             }
 
         }else{

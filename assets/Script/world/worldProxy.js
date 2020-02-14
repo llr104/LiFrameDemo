@@ -48,7 +48,7 @@ let worldProxy = cc.Class({
     },
 
     joinWorldAck: function(data){
-        //console.log("joinWorldAck:", data)
+        console.log("joinWorldAck:", data)
         App.eventMgr.emit(worldDefine.event.event_joinWorld, data)
     },
 
