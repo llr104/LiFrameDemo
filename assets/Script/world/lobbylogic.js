@@ -25,13 +25,9 @@ cc.Class({
         App.eventMgr.on(worldDefine.event.event_gameServers, this.onGameServersAck, this)
         App.eventMgr.on(worldDefine.event.event_world_proxyError, this.onProxyError, this)
         App.eventMgr.on(worldDefine.event.event_world_authError, this.onAuthError, this)
-
-        var pl = proxyMgr.getProxyObj(proxyName.PROXY_LOGIN)
-        var pw = proxyMgr.getProxyObj(proxyName.PROXY_WORLD)
-
-        var s = pl.getSession()
-        var id = pl.getUserId()
-        pw.joinWorldReq(s, id)
+        App.eventMgr.on(worldDefine.event.event_world_netError, this.onNetError, this)
+        
+        this.join()
         
     },
 
@@ -61,6 +57,22 @@ cc.Class({
         }, null);
     },
 
+    onNetError: function(){
+        let self = this;
+        var tips = "网络连接异常，请重试！";
+        uiTools.showPopDialog("", tips, 0, function(){
+           self.join()
+        }, null);
+    },
+
+    join: function(){
+        var pl = proxyMgr.getProxyObj(proxyName.PROXY_LOGIN)
+        var pw = proxyMgr.getProxyObj(proxyName.PROXY_WORLD)
+
+        var s = pl.getSession()
+        var id = pl.getUserId()
+        pw.joinWorldReq(s, id)
+    },
 
     onJoinWorldAck:function(event, data){
         var obj = JSON.parse(data)
@@ -129,10 +141,12 @@ cc.Class({
     },
 
     onClickRefresh: function(){
-        var pw = proxyMgr.getProxyObj(proxyName.PROXY_WORLD)
-        var u = pw.getUser()
+        //var pw = proxyMgr.getProxyObj(proxyName.PROXY_WORLD)
+        //var u = pw.getUser()
         //console.log("onClickRefresh:",u)
-        pw.userInfoReq(u.Id)
+        //pw.userInfoReq(u.Id)
+        var network = require("network")
+        network.close()
     },
 
     onClickGameIcon:function(event){

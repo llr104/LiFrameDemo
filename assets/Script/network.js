@@ -42,11 +42,11 @@ function Encrypt(word) {
 }
 
 
-
 let network = function(){
     
     this.connect = function(url){
-        if (this.innet.wssocket && this.innet.wssocket.readyState<=1) {
+        console.log("connect 111111")
+        if (this.innet.wssocket && this.innet.wssocket.readyState <= 1) {
             this.innet.wssocket.close()
         }
     
@@ -64,12 +64,8 @@ let network = function(){
             clearInterval(this.interval)
         }
 
-        if (this.checkTimer){
-            clearInterval(this.checkTimer)
-        }
-
         this.interval = setInterval(this.update.bind(this), 10)
-        this.checkTimer = setInterval(this.check.bind(this), 2000)
+       
     }
 
     this.update = function(){
@@ -89,7 +85,7 @@ let network = function(){
     },
 
     this.check = function(){
-        if(this.innet.wssocket == null || this.innet.wssocket.readyState != 1){
+        if(this.innet.wssocket == null || this.innet.wssocket.readyState > 1){
             this.connect(this.innet.url)
         }
     }
@@ -98,7 +94,7 @@ let network = function(){
 
         var str = JSON.stringify(msgObj);
         var msg = msgName + "|" + proxyName + "|" + str
-        //console.log("send:", msg)
+        //console.log("ready send:", msg)
         //console.log("before Encrypt msg:", msg, msg.length)
         msg = Encrypt(msg)
         //console.log("Encrypt msg:", msg, msg.length)
@@ -118,11 +114,12 @@ let network = function(){
         if (this.innet.wssocket){
             this.msgArr.push(intView)
         }
+
+        this.check()
     }
     
     this.onopen = function(target){
-        console.log("onopen:",target)
-        
+        console.log("onopen:", target)
     }
     
     this.onmessage = function(msgevent){
@@ -140,7 +137,6 @@ let network = function(){
             var buf = [];
             var view = new Uint8Array(ab);
             
-            
             for (var i = 0; i < ab.byteLength; ++i) {
                 buf.push(view[i])
             }
@@ -157,9 +153,7 @@ let network = function(){
         //console.log("zip len:%d, origin Len:%d, %f", zipLen, originLen, zipLen/originLen)
 
         msg = Decrypt(msg)
-
         //console.log("message Decrypt msg:", msg)
-
 
         //解析协议
         var arr = msg.split("|")
@@ -191,14 +185,31 @@ let network = function(){
         }
 
     }
+
+    this.close  = function(){
+        if (this.innet.wssocket != null){
+            this.innet.wssocket.close()
+        }
+    }
     
     this.onclose = function(err){
-        //console.log("close:",err)
-    
+        console.log("close:", err)
+        
     }
     
     this.onerror = function(err){
-        //console.log("onerror:",err)
+        console.log("onerror:", err)
+        this.networkErr()
+    }
+
+    this.networkErr = function (){
+        var arr = proxyMgr.getAllProxy()
+        //console.log("arr:", arr)
+        for (let index = 0; index < arr.length; index++) {
+            let proxy = arr[index];
+            //console.log("networkError:", proxy)
+            proxy.networkError()
+        }
     }
 }
 
@@ -211,8 +222,6 @@ network.getInstance = function(){
     }
     return this.instance;
 }
-
-
 
 
 module.exports = network.getInstance()

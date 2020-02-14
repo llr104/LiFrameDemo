@@ -1,6 +1,7 @@
 var baseProxy = require("baseProxy")
 var proxyName = require("proxyName")
 var gateDefine = require("gateDefine")
+var loginDefine = require("loginDefine")
 var App = require("App")
 
 let gateProxy = cc.Class({
@@ -13,11 +14,14 @@ let gateProxy = cc.Class({
     onAdd: function () {
         this._super();
         this.callBack.set(gateDefine.netFunc.loginServerAck, this.gateLoginServerAck)
-        
     },
 
     onRemove: function () {
         this._super();
+    },
+
+    networkError: function(){
+        App.eventMgr.emit(loginDefine.event.event_login_netError, null)
     },
     
     gateLoginServerReq: function(obj){

@@ -37,8 +37,9 @@ let gameDefine = {
         event_attack: "event_attack",
         event_monster: "event_monster",
         event_user: "event_user",
-        event_game_proxyError:"event_game_proxyError",
-        event_game_authError:"event_game_authError",
+        event_game_proxyError: "event_game_proxyError",
+        event_game_authError: "event_game_authError",
+        event_game_netError: "event_game_netError"
 
     },
 }

@@ -31,6 +31,11 @@ let loginProxy = cc.Class({
         App.eventMgr.emit(loginDefine.event.event_login_authError, null)
     },
 
+    networkError: function(){
+        //console.log("login networkError")
+        App.eventMgr.emit(loginDefine.event.event_login_netError, null)
+    },
+
 
     getSession: function(){
         return this._session

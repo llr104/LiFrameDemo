@@ -31,6 +31,10 @@ let baseProxy = cc.Class({
     },
 
 
+    networkError: function(){
+        console.log("base networkError")
+    },
+
     getProxyName: function(){
         return this._proxyName
     },
@@ -61,7 +65,9 @@ let baseProxy = cc.Class({
 
     authError: function(){
         this.onAuthError()
-    }
+    },
+
+
 
 });
 

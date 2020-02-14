@@ -37,6 +37,10 @@ let gameProxy = cc.Class({
         App.eventMgr.emit(gameDefine.event.event_game_authError, null)
     },
 
+    networkError: function(){
+        App.eventMgr.emit(gameDefine.event.event_game_netError, null)
+    },
+
 
     onRemove: function () {
         this._super()

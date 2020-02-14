@@ -20,6 +20,7 @@ let worldDefine = {
         event_gameServers: "event_gameServers",
         event_world_proxyError: "event_world_proxyError",
         event_world_authError: "event_world_authError",
+        event_world_netError: "event_world_netError",
     },
 }
 

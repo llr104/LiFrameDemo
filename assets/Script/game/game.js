@@ -31,7 +31,6 @@ cc.Class({
         }
 
         this._sceneNode = null
-        
     },
 
     onEnable () {
@@ -39,7 +38,8 @@ cc.Class({
         App.eventMgr.on("sceneExit", this.sceneExit, this)
         App.eventMgr.on(gameDefine.event.event_game_proxyError, this.onProxyError, this)
         App.eventMgr.on(gameDefine.event.event_game_authError, this.onAuthError, this)
-
+        App.eventMgr.on(gameDefine.event.event_game_netError, this.onNetError, this)
+        
         App.eventMgr.on(gameDefine.event.event_enterGame, this.onEnterGame, this)
         App.eventMgr.on(gameDefine.event.event_heartBeat, this.onHeartBeat, this)
         App.eventMgr.on(gameDefine.event.event_logout, this.onLogout, this)
@@ -52,7 +52,22 @@ cc.Class({
         App.eventMgr.on(gameDefine.event.event_monster, this.onMonster, this)
         App.eventMgr.on(gameDefine.event.event_user, this.onUser, this)
 
+        this.enter()
 
+        this.schedule(this.updateHeartBeat, 5.0)
+        this.updateHeartBeat()
+
+    },
+
+    onDisable (){
+        console.log("onDisable")
+        App.eventMgr.offAllForTarget(this)
+        proxyMgr.removeProxy(proxyName.PROXY_GAME)
+        this._proxy = null
+        this.unscheduleAllCallbacks()
+    },
+
+    enter: function(){
         var curGameProxyStr = App.getData("curGameProxyStr");
         console.log("curGameProxyStr:", curGameProxyStr)
         var p = new gameProxy()
@@ -62,10 +77,6 @@ cc.Class({
 
         var userId = App.getData("userId");
         this._proxy.enterGameReq(userId);
-
-        this.schedule(this.updateHeartBeat, 5.0)
-        this.updateHeartBeat()
-
     },
 
     onProxyError: function(event){
@@ -87,22 +98,18 @@ cc.Class({
         }, null);
     },
 
-    
-    onDisable (){
-        console.log("onDisable")
-        App.eventMgr.offAllForTarget(this)
-        proxyMgr.removeProxy(proxyName.PROXY_GAME)
-        this._proxy = null
-        this.unscheduleAllCallbacks()
+    onNetError :function(){
+        let self = this
+        var tips = "网络连接异常，请重试！";
+        uiTools.showPopDialog("", tips, 0, function(){
+            self.enter()
+        }, null);
     },
-
-
+    
     onClickBack:function(){
         uiTools.showLobby()
         uiTools.hideGame()
     },
-
-  
 
     updateHeartBeat:function(){
         this._proxy.heartBeatReq();
@@ -110,6 +117,12 @@ cc.Class({
 
     sceneExit: function(event, sceneId){
         this._proxy.exitSceneReq(sceneId)
+
+        if (this._sceneNode){
+            this._sceneNode.active = false
+        }
+        
+        this.uiNode.active = true
     },
 
     onEnterGame:function(event, data){
@@ -147,7 +160,6 @@ cc.Class({
             const id = obj.sceneId[index];
             const name = obj.sceneName[index];
 
-        
             icon.active = true;
             icon.getComponent("sceneItem").setName(name);
             icon.getComponent("sceneItem").setId(id);

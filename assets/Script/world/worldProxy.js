@@ -30,6 +30,10 @@ let worldProxy = cc.Class({
         App.eventMgr.emit(worldDefine.event.event_world_authError, null)
     },
 
+    networkError: function(){
+        App.eventMgr.emit(worldDefine.event.event_world_netError, null)
+    },
+
 
     getUser:function(){
         console.log("getUser:",this._userInfo)

@@ -36,6 +36,16 @@ let proxyMgr = function(){
         return arr
     },
 
+    this.getAllProxy = function(){
+        var arr = []
+
+        for (let [key, v] of this.proxyMap.entries()) {
+            arr.push(v)
+        }
+
+        return arr
+    },
+
     this.getProxyObj = function(proxyName){
         //console.log("getProxyObj:", this.proxyMap, this.proxyMap.get(proxyName), proxyName)
         return this.proxyMap.get(proxyName)

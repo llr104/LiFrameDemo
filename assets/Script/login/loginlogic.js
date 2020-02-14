@@ -27,16 +27,20 @@ cc.Class({
         App.eventMgr.on(loginDefine.event.event_distributeWorld, this.onDistributeWorldAck, this)
         App.eventMgr.on(loginDefine.event.event_login_proxyError, this.onProxyError, this)
         App.eventMgr.on(loginDefine.event.event_login_authError, this.onAuthError, this)
-
-
-        var p = new gateProxy()
-        proxyMgr.AddProxy(p)
-        network.connect("ws://localhost:8000")
-        p.gateLoginServerReq({})
+        App.eventMgr.on(loginDefine.event.event_login_netError, this.onNetError, this)
+        this.connect()
+        
     },
 
     onDisable (){
         App.eventMgr.offAllForTarget(this)
+    },
+
+    connect:function(){
+        var p = new gateProxy()
+        proxyMgr.AddProxy(p)
+        network.connect("ws://localhost:8000")
+        p.gateLoginServerReq({})
     },
 
     onProxyError: function(event){
@@ -52,6 +56,13 @@ cc.Class({
         console.log("onAuthError");
     },
 
+    onNetError :function(){
+        let self = this
+        var tips = "网络连接异常，请重试！";
+        uiTools.showPopDialog("", tips, 0, function(){
+            self.connect()
+        }, null);
+    },
 
 
     onLoginServerAck:function(event, data){
