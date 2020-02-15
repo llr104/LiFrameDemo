@@ -21,6 +21,11 @@ cc.Class({
     onLoad () {
 
         this.sceneIconNode.active = false
+        this._sceneNode = null
+    },
+
+    onEnable () {
+
         var pw = proxyMgr.getProxyObj(proxyName.PROXY_WORLD)
         if(pw){
            var obj = pw.getUser()
@@ -29,12 +34,7 @@ cc.Class({
                 this.idLab.string = "Id:" + obj.Id
            }
         }
-
-        this._sceneNode = null
-    },
-
-    onEnable () {
-
+        
         App.eventMgr.on("sceneExit", this.sceneExit, this)
         App.eventMgr.on(gameDefine.event.event_game_proxyError, this.onProxyError, this)
         App.eventMgr.on(gameDefine.event.event_game_authError, this.onAuthError, this)
@@ -77,6 +77,8 @@ cc.Class({
 
         var userId = App.getData("userId");
         this._proxy.enterGameReq(userId);
+
+        console.log("enter uerId:", userId);
     },
 
     onProxyError: function(event){
@@ -122,7 +124,7 @@ cc.Class({
         if (this._sceneNode != null){
             this._sceneNode.destroy()
         }
-        
+
         this._sceneNode = null
     },
 
