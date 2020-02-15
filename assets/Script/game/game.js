@@ -118,11 +118,12 @@ cc.Class({
     sceneExit: function(event, sceneId){
         this._proxy.exitSceneReq(sceneId)
 
-        if (this._sceneNode){
-            this._sceneNode.active = false
+        this.uiNode.active = true
+        if (this._sceneNode != null){
+            this._sceneNode.destroy()
         }
         
-        this.uiNode.active = true
+        this._sceneNode = null
     },
 
     onEnterGame:function(event, data){
@@ -171,7 +172,10 @@ cc.Class({
         console.log("onEnterScene:", data)
         var obj = JSON.parse(data)
         if (obj.Code == 0){
+
             if (this._sceneNode != null){
+                this._sceneNode.active = true
+                this.uiNode.active = false
                 return
             }
 

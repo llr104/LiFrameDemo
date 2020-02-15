@@ -19,7 +19,7 @@ let baseProxy = cc.Class({
 
     onRemove: function () {
         //退出代理
-        this.sendProto("gate.ExitProxy", {})
+        //this.sendProto("gate.ExitProxy", {})
     },
 
     onProxyError: function(){
