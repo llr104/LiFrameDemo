@@ -138,6 +138,8 @@ cc.Class({
         
         uiTools.hideLobby()
         uiTools.showLogin()
+
+        proxyMgr.removeProxy(proxyName.PROXY_WORLD)
     },
 
     onClickRefresh: function(){

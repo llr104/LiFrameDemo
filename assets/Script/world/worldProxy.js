@@ -19,7 +19,7 @@ let worldProxy = cc.Class({
     },
 
     onRemove: function () {
-
+        this._super();
     },
 
     onProxyError: function(){
