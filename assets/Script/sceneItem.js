@@ -28,6 +28,7 @@ cc.Class({
     },
 
     onClickScene:function(){
+        console.log("onClickScene")
         this._proxy.enterSceneReq(this._id)
     },
 });

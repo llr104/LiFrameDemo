@@ -34,6 +34,8 @@ cc.Class({
                 this.idLab.string = "Id:" + obj.Id
            }
         }
+
+        this.uiNode.active = true
         
         App.eventMgr.on("sceneExit", this.sceneExit, this)
         App.eventMgr.on(gameDefine.event.event_game_proxyError, this.onProxyError, this)
@@ -65,6 +67,12 @@ cc.Class({
         proxyMgr.removeProxy(proxyName.PROXY_GAME)
         this._proxy = null
         this.unscheduleAllCallbacks()
+
+        if (this._sceneNode != null) {
+            this._sceneNode.destroy()
+            this._sceneNode = null
+        }
+        
     },
 
     enter: function(){

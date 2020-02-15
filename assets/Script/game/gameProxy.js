@@ -58,6 +58,7 @@ let gameProxy = cc.Class({
     },
 
     enterGameAck: function(data){
+        console.log("enterGameAck:", data)
         App.eventMgr.emit(gameDefine.event.event_enterGame, data)
     },
 
@@ -92,10 +93,12 @@ let gameProxy = cc.Class({
     enterSceneReq: function(sceneId){
         var obj = {}
         obj.sceneId = sceneId
+        console.log("enterSceneReq:", sceneId)
         this.sendProto(gameDefine.netFunc.enterSceneReq, obj)
     },
 
     enterSceneAck: function(data){
+        console.log("enterSceneAck:", data)
         App.eventMgr.emit(gameDefine.event.event_enterScene, data)
     },
 

@@ -21,15 +21,15 @@ cc.Class({
         this._isAttack = false
         this._heroMap = new Map()
         this._monsterMap = new Map()
-        this._proxy = proxyMgr.getProxyObj(proxyName.PROXY_GAME)
-        this._myUserId = App.getData("userId")
-
-    
+       
         this.sceneBg.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this)
         this.sceneBg.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this)
     },
 
     onEnable (){
+        this._proxy = proxyMgr.getProxyObj(proxyName.PROXY_GAME)
+        this._myUserId = App.getData("userId")
+
         App.eventMgr.on("touchMonsterEnd", this.onTouchMonsterEnd, this)
     },
 
