@@ -41,6 +41,7 @@ let worldProxy = cc.Class({
     },
     
     joinWorldReq: function(session, userId){
+        console.log("joinWorldReq")
         var data = {}
         data.Session = session
         data.UserId = userId
