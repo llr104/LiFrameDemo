@@ -8,7 +8,8 @@ let innet = {
     wssocket:null,
     url:"",
     handshake:false,
-    uuid:""
+    uuid:"",
+    seqIndex:1,
 }
 
 
@@ -61,7 +62,7 @@ let network = function(){
     
         this.innet.url = url
         this.innet.wssocket = ws
-        this.handshake = false
+        this.innet.handshake = false
 
         if (this.interval){
             clearInterval(this.interval)
@@ -95,14 +96,16 @@ let network = function(){
 
     this.pack = function(msgName, proxyName, msgObj){
 
+        var curSeqIndex = this.innet.seqIndex
+        this.innet.seqIndex++
         var str = ""
         if (typeof msgObj == "object"){
-            str = JSON.stringify(msgObj);
+            str = JSON.stringify(msgObj)
         }else{
             str = msgObj
         }
        
-        var msg = msgName + "|" + proxyName + "|" + str
+        var msg = msgName + "|" + proxyName + "|" + curSeqIndex + "|" + str
         msg = Encrypt(msg)
         var options = {
             level: 9,
@@ -126,7 +129,7 @@ let network = function(){
         if (this.innet.wssocket){
             this.msgArr.push(p)
         }
-
+       
         this.check()
     }
     
@@ -174,10 +177,13 @@ let network = function(){
         
         //解析协议
         var arr = msg.split("|")
-        if(arr.length == 3){
+        if(arr.length == 4){
             var msgName = arr[0]
             var proxy = arr[1]
-            var msgdata = arr[2]
+            var seq = arr[2]
+            var msgdata = arr[3]
+
+            console.log("seq:", seq)
             
             if (msgName == "handshake"){
                 this.innet.handshake = true
