@@ -22,6 +22,8 @@ cc.Class({
 
     onEnable () {
 
+        this._isConnect = false
+        this._isClickLogin = false
         App.eventMgr.on(gateDefine.event.event_loginServer, this.onLoginServerAck, this)
         App.eventMgr.on(loginDefine.event.event_login, this.onLoginAck, this)
         App.eventMgr.on(loginDefine.event.event_distributeWorld, this.onDistributeWorldAck, this)
@@ -37,6 +39,7 @@ cc.Class({
     },
 
     connect:function(){
+        console.log("connect")
         var p = new gateProxy()
         proxyMgr.AddProxy(p)
         network.connect("ws://localhost:8000")
@@ -72,6 +75,11 @@ cc.Class({
             var p = new loginProxy()
             p.setProxyStr(obj.ServerInfo.ProxyName)
             proxyMgr.AddProxy(p)
+            this._isConnect = true
+            if(this._isClickLogin){
+                this.login()
+            }
+            
             //uiTools.showPopDialog("", "连接成功", 0, null, null)
         }else{
             var tips = "获取登录服信息失败，错误码是："+obj.Code
@@ -115,7 +123,21 @@ cc.Class({
     },
 
     onClickLogin:function(){
+        this._isClickLogin = true
+        if(this._isConnect == false){
+            this.connect()
+        }else{
+            this.login()
+        }
+        
+    },
 
+    onClickRegister:function(){
+        uiTools.hideLogin()
+        uiTools.showRegister()
+    },
+
+    login: function(){
         var name = this.userEdit.string
         var password = md5(this.passwordEdit.string)
         console.log("password:", password)
@@ -127,10 +149,5 @@ cc.Class({
             var tips = "服务器连接失败"
             uiTools.showPopDialog("", tips, 0, null, null)
         }
-    },
-
-    onClickRegister:function(){
-        uiTools.hideLogin()
-        uiTools.showRegister()
     }
 });
