@@ -4,13 +4,9 @@ let worldDefine = {
 
     netFunc:{
         joinWorldReq: "EnterWorld.JoinWorldReq",
-        joinWorldAck: "EnterWorld.JoinWorldAck",
         userInfoReq: "EnterWorld.UserInfoReq",
-        userInfoAck: "EnterWorld.UserInfoAck",
         userLogoutReq: "EnterWorld.UserLogoutReq",
-        userLogoutAck: "EnterWorld.UserLogoutAck",
         gameServersReq: "EnterWorld.GameServersReq",
-        gameServersAck: "EnterWorld.GameServersAck",
     },
 
     event:{

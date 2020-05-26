@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.4",
   "uuid": "df699d18-152d-4868-bd8c-d78ae18e2368",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 700,
+  "height": 519,
   "platformSettings": {},
   "subMetas": {
     "pvp_rank_frame": {

@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.4",
   "uuid": "923de959-52b5-4451-a56f-6696b1a8e413",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 1024,
+  "height": 615,
   "platformSettings": {},
   "subMetas": {
     "bbg_fall_cityofmage2": {

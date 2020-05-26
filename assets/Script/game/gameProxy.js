@@ -14,13 +14,13 @@ let gameProxy = cc.Class({
         this._super();
 
         this._sceneData = null
-        this.callBack.set(gameDefine.netFunc.enterGameAck, this.enterGameAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.heartBeatAck, this.heartBeatAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.logoutAck, this.logoutAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.enterSceneAck, this.enterSceneAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.exitSceneAck, this.exitSceneAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.sceneListAck, this.sceneListAck.bind(this))
-        this.callBack.set(gameDefine.netFunc.sceneAck, this.sceneAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.enterGameReq, this.enterGameAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.heartBeatReq, this.heartBeatAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.logoutReq, this.logoutAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.enterSceneReq, this.enterSceneAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.exitSceneReq, this.exitSceneAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.sceneListReq, this.sceneListAck.bind(this))
+        this.callBack.set(gameDefine.netFunc.sceneReq, this.sceneAck.bind(this))
         this.callBack.set(gameDefine.netFunc.movePush, this.movePush.bind(this))
         this.callBack.set(gameDefine.netFunc.monsterPush, this.monsterPush.bind(this))
         this.callBack.set(gameDefine.netFunc.attackPush, this.attackPush.bind(this))

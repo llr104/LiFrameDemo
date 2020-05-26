@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.4",
   "uuid": "e7a2f86b-b0e4-42aa-bbd2-47305c6d1412",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 196,
+  "height": 51,
   "platformSettings": {},
   "subMetas": {
     "herodetail_name_frame_7": {

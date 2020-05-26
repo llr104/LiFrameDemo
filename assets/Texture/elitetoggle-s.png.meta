@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.4",
   "uuid": "da1b69ea-a0e3-49ff-a483-8df4925ce0cf",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 129,
+  "height": 67,
   "platformSettings": {},
   "subMetas": {
     "elitetoggle-s": {

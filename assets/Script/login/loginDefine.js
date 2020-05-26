@@ -4,11 +4,8 @@ let loginDefine = {
 
     netFunc:{
         loginReq: "EnterLogin.LoginReq",
-        loginAck: "EnterLogin.LoginAck",
         registerReq: "EnterLogin.RegisterReq",
-        registerAck: "EnterLogin.RegisterAck",
         distributeWorldReq: "EnterLogin.DistributeWorldReq",
-        distributeWorldAck: "EnterLogin.DistributeWorldAck",
     },
 
     event:{

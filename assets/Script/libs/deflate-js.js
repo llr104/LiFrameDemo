@@ -2,7 +2,7 @@
 	'use strict';
 
 	module.exports = {
-		'inflate': require('./lib/rawinflate.js'),
-		'deflate': require('./lib/rawdeflate.js')
+		'inflate': require('rawinflate.js'),
+		'deflate': require('rawdeflate.js')
 	};
 }());

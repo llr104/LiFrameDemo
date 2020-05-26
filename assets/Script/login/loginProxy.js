@@ -14,9 +14,9 @@ let loginProxy = cc.Class({
 
     onAdd: function () {
         this._super();
-        this.callBack.set(loginDefine.netFunc.loginAck, this.loginAck.bind(this))
-        this.callBack.set(loginDefine.netFunc.registerAck, this.registerAck.bind(this))
-        this.callBack.set(loginDefine.netFunc.distributeWorldAck, this.distributeWorldAck.bind(this))
+        this.callBack.set(loginDefine.netFunc.loginReq, this.loginAck.bind(this))
+        this.callBack.set(loginDefine.netFunc.registerReq, this.registerAck.bind(this))
+        this.callBack.set(loginDefine.netFunc.distributeWorldReq, this.distributeWorldAck.bind(this))
     },
 
     onRemove: function () {

@@ -4,7 +4,6 @@ let gateDefine = {
 
     netFunc:{
         loginServerReq: "gate.LoginServerReq",
-        loginServerAck: "gate.LoginServerAck"
     },
 
     event:{

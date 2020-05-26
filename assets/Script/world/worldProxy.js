@@ -12,10 +12,10 @@ let worldProxy = cc.Class({
 
     onAdd: function () {
         this._super();
-        this.callBack.set(worldDefine.netFunc.joinWorldAck, this.joinWorldAck.bind(this))
-        this.callBack.set(worldDefine.netFunc.userInfoAck, this.userInfoAck.bind(this))
-        this.callBack.set(worldDefine.netFunc.userLogoutAck, this.userLogoutAck.bind(this))
-        this.callBack.set(worldDefine.netFunc.gameServersAck, this.gameServersAck.bind(this))
+        this.callBack.set(worldDefine.netFunc.joinWorldReq, this.joinWorldAck.bind(this))
+        this.callBack.set(worldDefine.netFunc.userInfoReq, this.userInfoAck.bind(this))
+        this.callBack.set(worldDefine.netFunc.userLogoutReq, this.userLogoutAck.bind(this))
+        this.callBack.set(worldDefine.netFunc.gameServersReq, this.gameServersAck.bind(this))
     },
 
     onRemove: function () {
@@ -60,6 +60,7 @@ let worldProxy = cc.Class({
     },
 
     userInfoAck: function(data){
+        console.log("userInfoAck:", data)
         var obj = JSON.parse(data)
         if(obj.Code == 0){
             this._userInfo = obj.User

@@ -13,7 +13,7 @@ let gateProxy = cc.Class({
 
     onAdd: function () {
         this._super();
-        this.callBack.set(gateDefine.netFunc.loginServerAck, this.gateLoginServerAck)
+        this.callBack.set(gateDefine.netFunc.loginServerReq, this.gateLoginServerAck)
     },
 
     onRemove: function () {
