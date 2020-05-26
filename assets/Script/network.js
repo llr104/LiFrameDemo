@@ -199,7 +199,12 @@ let network = function(){
                     const proxyObj = proxyArr[index];
                     var c = proxyObj.findCallBack(msgName)
                     if (c != null){
-                        c(msgdata)
+                        try {
+                            c(msgdata)
+                        } catch (error) {
+                            console.error("error:", error)
+                        }
+                       
                         isFound = true
                     }
                 }
