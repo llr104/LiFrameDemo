@@ -4,11 +4,12 @@ let proxyMgr = function(){
     this.AddProxy = function(proxyObj){
         var name = proxyObj.getProxyName()
         if (this.proxyMap.has(name)){
-            console.warn("AddProxy already add:", name)
+            this.proxyMap.get(name).onRemove()
+            this.proxyMap.set(name, proxyObj)
+            proxyObj.onAdd()
         }else{
             this.proxyMap.set(name, proxyObj)
             proxyObj.onAdd()
-            console.log("AddProxy:", this.proxyMap)
         }
     }
 
