@@ -8,6 +8,6 @@
   demo目前比较简陋，只做了同步玩家移动、攻击、怪物出现功能，demo后续空闲时间会继续开发，由于网上找素材耗费时间，如有好心人愿意贡献些素材请联系QQ群1054084192
 # 图片素材来源于网络，仅供学习使用，请不要用于商用
 
-![登录界面](https://github.com/llr104/LiFrameDemo/blob/master/1.png)
-![选择服务器界面](https://github.com/llr104/LiFrameDemo/blob/master/2.png)
-![游戏场景界面](https://github.com/llr104/LiFrameDemo/blob/master/3.png)
+![登录界面](https://s1.imagehub.cc/images/2021/04/24/1.png)
+![选择服务器界面](https://s1.imagehub.cc/images/2021/04/24/2.png)
+![游戏场景界面](https://s1.imagehub.cc/images/2021/04/24/3.png)
